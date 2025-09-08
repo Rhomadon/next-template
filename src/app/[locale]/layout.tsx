@@ -1,7 +1,5 @@
 import { ReactNode } from "react"
 import { I18nProvider } from "@/lib/i18n"
-import enMessages from "@/messages/en.json"
-import idMessages from "@/messages/id.json"
 
 export default async function LocaleLayout({
   children,
@@ -12,7 +10,12 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params
 
-  const messages = locale === "id" ? idMessages : enMessages
+  let messages: Record<string, string>
+  try {
+    messages = (await import(`@/messages/${locale}.json`)).default
+  } catch {
+    messages = (await import("@/messages/en.json")).default
+  }
 
   return (
     <I18nProvider messages={messages}>
