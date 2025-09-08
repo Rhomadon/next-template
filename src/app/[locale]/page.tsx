@@ -1,8 +1,12 @@
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LocaleSwitch } from "@/components/locale-switch";
 
-export default function Page({ params }: { params: { locale: string } }) {
-  const { locale } = params;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-4">
